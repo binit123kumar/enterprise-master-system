@@ -1,0 +1,21 @@
+{
+  "name": "enterprise-master-system",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Binit's Enterprise Grade Master System",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext js,jsx"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "vite": "^4.4.0",
+    "eslint": "^8.45.0"
+  }
+}

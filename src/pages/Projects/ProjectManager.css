@@ -1,0 +1,71 @@
+.project-manager { max-width: 1400px; }
+
+.pm-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-tabs { display: flex; gap: 4px; }
+.filter-tab {
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-tab:hover { background: var(--bg-hover); color: var(--text-primary); }
+.filter-tab.active { background: var(--accent-blue); border-color: var(--accent-blue); color: white; }
+
+.project-table {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.project-table table { width: 100%; border-collapse: collapse; }
+.project-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+.project-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.project-table tr:last-child td { border-bottom: none; }
+.project-table tr:hover td { background: var(--bg-hover); }
+
+.project-name { font-weight: 600; color: var(--text-primary); }
+.stack-tag { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); }
+.env-tag { font-size: 11px; color: var(--accent-cyan); }
+.text-muted { font-size: 12px; color: var(--text-muted); }
+.commits-count { font-family: var(--font-mono); color: var(--accent-purple); font-size: 13px; }
+
+.health-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.health-fill {
+  height: 6px;
+  background: var(--accent-green);
+  border-radius: 3px;
+  max-width: 60px;
+}
+.health-bar span { font-size: 12px; color: var(--accent-green); font-family: var(--font-mono); }
+
+.action-btns { display: flex; gap: 6px; }

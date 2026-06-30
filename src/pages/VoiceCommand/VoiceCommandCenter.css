@@ -1,0 +1,21 @@
+.voice-center { max-width: 1400px; }
+.voice-grid { display: grid; grid-template-columns: 320px 1fr; gap: 16px; align-items: start; }
+.voice-left { display: flex; flex-direction: column; gap: 16px; }
+.voice-card { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 30px 20px; }
+.mic-circle { position: relative; width: 100px; height: 100px; background: var(--bg-secondary); border: 2px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+.mic-circle.active { border-color: var(--accent-red); box-shadow: 0 0 30px rgba(239,68,68,0.3); }
+.mic-icon { font-size: 36px; }
+.mic-waves { position: absolute; inset: -10px; border-radius: 50%; border: 2px solid rgba(239,68,68,0.3); animation: ripple 1s infinite; }
+.mic-waves span { position: absolute; inset: -6px; border-radius: 50%; border: 1px solid rgba(239,68,68,0.2); animation: ripple 1s infinite 0.3s; }
+@keyframes ripple { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
+.voice-status { font-size: 14px; color: var(--text-muted); }
+.mic-btn { width: 100%; justify-content: center; padding: 12px; }
+.cmd-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.cmd-chip { padding: 5px 12px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 20px; font-size: 12px; color: var(--text-secondary); cursor: pointer; transition: all 0.15s; }
+.cmd-chip:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+.cmd-history { display: flex; flex-direction: column; }
+.cmd-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.cmd-row:last-child { border-bottom: none; }
+.cmd-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.cmd-text { font-size: 13px; color: var(--text-primary); font-weight: 500; }
+.cmd-result { font-size: 11px; color: var(--text-muted); }
