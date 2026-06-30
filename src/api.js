@@ -1,4 +1,7 @@
-// Mock API Service for EnterpriseOS
+// API Service - Connected to Live Backend
+const API_BASE = "https://enterprise-master-system-api.onrender.com";
+
+// Mock data (fallback if API fails)
 const MOCK_PROJECTS = [
   {
     projectId: 1,
@@ -58,21 +61,43 @@ const MOCK_AUDIT_LOGS = [
 
 export const api = {
   getProjects: async () => {
-    return new Promise(resolve => {
-      setTimeout(() => resolve(MOCK_PROJECTS), 300);
-    });
+    try {
+      const res = await fetch(`${API_BASE}/api/projects`);
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      }
+      return MOCK_PROJECTS;
+    } catch (e) {
+      console.log("Using mock projects", e);
+      return MOCK_PROJECTS;
+    }
   },
 
   getLogs: async (limit = 50) => {
-    return new Promise(resolve => {
-      setTimeout(() => resolve(MOCK_LOGS.slice(0, limit)), 300);
-    });
+    try {
+      const res = await fetch(`${API_BASE}/api/logs?limit=${limit}`);
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      }
+    } catch (e) {
+      console.log("Using mock logs");
+    }
+    return MOCK_LOGS;
   },
 
   getAuditLogs: async (limit = 50) => {
-    return new Promise(resolve => {
-      setTimeout(() => resolve(MOCK_AUDIT_LOGS.slice(0, limit)), 300);
-    });
+    try {
+      const res = await fetch(`${API_BASE}/api/auditlogs?limit=${limit}`);
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      }
+    } catch (e) {
+      console.log("Using mock audit logs");
+    }
+    return MOCK_AUDIT_LOGS;
   }
 };
 
