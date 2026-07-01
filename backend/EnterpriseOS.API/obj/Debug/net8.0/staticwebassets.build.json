@@ -1,1 +1,11 @@
-{"Version":1,"Hash":"qsdpiVw0G8yDtbQ99acnUK8JhVpFM5v8J0uhZNgBKKk=","Source":"EnterpriseOS.API","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
+{
+  "Version": 1,
+  "Hash": "N6c3eyxwLMPYE6RUzWGRyqz4II+Ot2iLxz+qSKua6bw=",
+  "Source": "EnterpriseOS.API",
+  "BasePath": "_content/EnterpriseOS.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
