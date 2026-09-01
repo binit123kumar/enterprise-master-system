@@ -10,7 +10,12 @@ namespace EnterpriseOS.API.Controllers;
 public class DeploymentController : ControllerBase
 {
     private readonly IDeploymentService _svc;
-    public DeploymentController(IDeploymentService svc) => _svc = svc;
+    private readonly IAuditService _audit;
+    public DeploymentController(IDeploymentService svc, IAuditService audit)
+    {
+        _svc   = svc;
+        _audit = audit;
+    }
 
     // GET /api/deployment/history
     [HttpGet("history")]
@@ -30,6 +35,8 @@ public class DeploymentController : ControllerBase
                 "Authorization failed. Voice + PIN + Fingerprint all required."));
 
         var result = await _svc.DeployAsync(request);
+        var ip = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+        await _audit.LogAsync("deploy", $"Project #{request.ProjectId} → {request.Environment}", "Success", "High", ip, "Deployment");
         return Ok(new ApiResponse<Deployment>(true, result, "Deployment started"));
     }
 

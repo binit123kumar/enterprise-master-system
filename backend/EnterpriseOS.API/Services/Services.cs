@@ -44,6 +44,12 @@ public interface IGitService
     Task<object> CommitAsync(int projectId, string message, string branch);
 }
 
+public interface IAuditService
+{
+    Task<IEnumerable<AuditLog>> GetLogsAsync(int limit = 50);
+    Task LogAsync(string action, string targetEntity, string result, string riskLevel, string ip, string category);
+}
+
 // ── ProjectService ────────────────────────────────────
 public class ProjectService : IProjectService
 {
@@ -274,6 +280,31 @@ public class AIAgentService : IAIAgentService
         }
         await _db.SaveChangesAsync();
         return prompt;
+    }
+}
+
+// ── AuditService ───────────────────────────────────────
+public class AuditService : IAuditService
+{
+    private readonly AppDbContext _db;
+    public AuditService(AppDbContext db) => _db = db;
+
+    public async Task<IEnumerable<AuditLog>> GetLogsAsync(int limit = 50) =>
+        await _db.AuditLogs.OrderByDescending(a => a.CreatedAt).Take(limit).ToListAsync();
+
+    public async Task LogAsync(string action, string targetEntity, string result, string riskLevel, string ip, string category)
+    {
+        _db.AuditLogs.Add(new AuditLog
+        {
+            Action       = action,
+            TargetEntity = targetEntity,
+            Result       = result,
+            RiskLevel    = riskLevel,
+            IpAddress    = ip,
+            Category     = category,
+            CreatedAt    = DateTime.UtcNow
+        });
+        await _db.SaveChangesAsync();
     }
 }
 

@@ -12,19 +12,31 @@ namespace EnterpriseOS.API.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IConfiguration _config;
-    public AuthController(IConfiguration config) => _config = config;
+    private readonly Services.IAuditService _audit;
+    public AuthController(IConfiguration config, Services.IAuditService audit)
+    {
+        _config = config;
+        _audit  = audit;
+    }
 
     public record LoginRequest(string Username, string Password);
     public record LoginResponse(string Token, string Name, string Role, DateTime Expires);
 
     // POST /api/auth/login
     [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginRequest req)
+    public async Task<IActionResult> Login([FromBody] LoginRequest req)
     {
+        var ip = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+
         // In production: validate against DB with hashed passwords
         // Demo: only Binit can login
         if (req.Username != "Binit" || req.Password != "admin123")
+        {
+            await _audit.LogAsync("login", "Dashboard", "Failed", "Medium", ip, "Auth");
             return Unauthorized(new { success = false, message = "Invalid credentials" });
+        }
+
+        await _audit.LogAsync("login", "Dashboard", "Success", "Low", ip, "Auth");
 
         var token   = GenerateJwtToken(req.Username, "owner");
         var expires = DateTime.UtcNow.AddHours(24);

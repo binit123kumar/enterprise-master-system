@@ -29,6 +29,7 @@ builder.Services.AddScoped<IDeploymentService,      DeploymentService>();
 builder.Services.AddScoped<IGitService,             GitService>();
 builder.Services.AddScoped<ISecurityService,        SecurityService>();
 builder.Services.AddScoped<IAIAgentService,         AIAgentService>();
+builder.Services.AddScoped<IAuditService,           AuditService>();
 builder.Services.AddScoped<IVersionControlService,  VersionControlService>();
 builder.Services.AddSingleton<LogBroadcastService>();
 
@@ -69,6 +70,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend", policy =>
         policy.WithOrigins(
             "http://localhost:3000",
+            "https://enterprise-master-system.vercel.app",
             "https://enterprise-os.render.com"
         )
         .AllowAnyHeader()

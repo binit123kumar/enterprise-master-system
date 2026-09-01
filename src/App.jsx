@@ -598,7 +598,20 @@ function LoginPage() {
 function AgentDashboard() {
   const { logs } = useWebSocket();
   const { notify } = useNotif();
-  const stats=[{icon:"📁",val:"12",lbl:"Active Projects",chg:"+2 this week",c:"#3b82f6"},{icon:"🚀",val:"8",lbl:"Deployments",chg:"Last: 2h ago",c:"#10b981"},{icon:"🔀",val:"34",lbl:"Git Commits",chg:"+5 today",c:"#8b5cf6"},{icon:"🟢",val:"99.8%",lbl:"Uptime",chg:"30 days",c:"#f59e0b"}];
+  const [liveCounts, setLiveCounts] = useState({ projects: null, deployments: null });
+
+  useEffect(() => {
+    Promise.all([api.getProjects(), api.getDeployments()]).then(([projects, deployments]) => {
+      setLiveCounts({ projects: projects.length, deployments: deployments.length });
+    });
+  }, []);
+
+  const stats=[
+    {icon:"📁",val: liveCounts.projects===null ? "…" : String(liveCounts.projects), lbl:"Active Projects",chg:"live from DB",c:"#3b82f6"},
+    {icon:"🚀",val: liveCounts.deployments===null ? "…" : String(liveCounts.deployments), lbl:"Deployments",chg:"live from DB",c:"#10b981"},
+    {icon:"🔀",val:"—",lbl:"Git Commits",chg:"not tracked yet",c:"#8b5cf6"},
+    {icon:"🟢",val:"99.8%",lbl:"Uptime",chg:"30 days",c:"#f59e0b"}
+  ];
   const agents=[{n:"AI Code Agent",s:"Active",t:"Reviewing pull requests"},{n:"Deployment Agent",s:"Standby",t:"Waiting for approval"},{n:"Monitoring Agent",s:"Active",t:"Watching 4 services"},{n:"Security Agent",s:"Active",t:"Running vulnerability scan"},{n:"Voice Command Agent",s:"Active",t:"Listening for commands"}];
   const qa=[{icon:"💻",lbl:"New Code Task",fn:()=>notify.info("New code task created!")},{icon:"🚀",lbl:"Deploy Now",fn:()=>notify.deploy("Deploy request sent! Auth required.")},{icon:"🔀",lbl:"Git Commit",fn:()=>notify.success("Git commit initiated!")},{icon:"📊",lbl:"View Logs",fn:()=>notify.info("Opening live logs...")},{icon:"🔐",lbl:"Security Check",fn:()=>notify.warning("Security scan started!")},{icon:"🎙️",lbl:"Voice Command",fn:()=>notify.info("Voice command center opening...")}];
   return (

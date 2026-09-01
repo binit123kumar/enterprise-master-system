@@ -13,6 +13,11 @@ import anthropic
 import os
 from datetime import datetime
 from routes import commands, prompts, monitoring
+from change_tracker import ChangeTracker
+
+# Initialize Change Tracker with SQL Server connection
+change_tracker = ChangeTracker()
+print("🔄 Change Tracker initialized")
 
 app = FastAPI(
     title="EnterpriseOS AI Agent",
@@ -138,12 +143,63 @@ async def health():
         "agent":     "EnterpriseOS AI Agent",
         "version":   "2.0.0",
         "owner":     "Binit",
-        "timestamp": datetime.utcnow().isoformat()
+        "timestamp": datetime.utcnow().isoformat(),
+        "database":  "connected" if change_tracker.use_db else "disconnected"
     }
 
 @app.get("/")
 async def root():
     return {"message": "EnterpriseOS AI Agent v2.0.0 — Binit's Master System"}
+
+# ── Change History endpoints ──────────────────────────
+@app.get("/changes/recent")
+async def get_recent_changes(limit: int = 50, repository: Optional[str] = None):
+    """Get recent changes from database"""
+    try:
+        changes = change_tracker.get_changes_from_db(repository, limit)
+        return {
+            "success": True,
+            "total": len(changes),
+            "changes": changes
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
+@app.post("/changes/track")
+async def track_repository_changes(repo_path: str, repo_name: str):
+    """Track changes in a specific repository"""
+    try:
+        change_record = change_tracker.track_repo_changes(repo_path, repo_name)
+        if "error" not in change_record:
+            change_tracker.save_changes_to_db(change_record)
+        return {
+            "success": "error" not in change_record,
+            "data": change_record
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
+@app.post("/changes/track-all")
+async def track_all_repositories(repos_path: str = "D:\\ITCell"):
+    """Track all repositories"""
+    try:
+        changes = change_tracker.track_all_repos(repos_path)
+        return {
+            "success": True,
+            "total_tracked": len(changes),
+            "changes": changes
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
 
 if __name__ == "__main__":
     import uvicorn
