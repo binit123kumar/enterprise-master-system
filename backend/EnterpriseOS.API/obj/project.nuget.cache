@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AFNIWI7Tw70=",
+  "dgSpecHash": "suk7fZOd/uM=",
   "success": true,
-  "projectFilePath": "D:\\enterprise-master-system\\backend\\EnterpriseOS.API\\EnterpriseOS.API.csproj",
+  "projectFilePath": "D:\\NOW WORKING PROJEJECT\\enterprise-master-system\\backend\\EnterpriseOS.API\\EnterpriseOS.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\binit\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\binit\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

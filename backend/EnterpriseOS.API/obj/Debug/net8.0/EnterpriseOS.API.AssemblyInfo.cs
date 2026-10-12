@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EnterpriseOS.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3fa15164a50553de58e79986f595601863f54c73")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75a73dd323349095a128c70a0319a1fad10c6d0a")]
 [assembly: System.Reflection.AssemblyProductAttribute("EnterpriseOS.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EnterpriseOS.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
